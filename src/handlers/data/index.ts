@@ -1,0 +1,1 @@
+// Create handler to receive data payloads on mqtt topic /device/{id}/data
