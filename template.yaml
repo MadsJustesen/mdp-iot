@@ -1,0 +1,20 @@
+# example AWS SAM (Serverless Application Model) template for serverless resource provistioning
+
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+
+  CreateDeploymentFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/handlers/deployments/
+      Handler: index.create
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /deployments
+            Method: post
