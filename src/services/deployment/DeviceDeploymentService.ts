@@ -16,7 +16,6 @@ export class DeviceDeploymentService {
   }: CreateDeploymentParameters): Promise<void> {
     if (!this.deviceConnectionStatusService.isDeviceConnected) {
       // This actually doesn't make sense, as deployments are to groups, not individual devices
-      // But keeping it here for the sake of the example
       throw new Error("Device is not connected");
     }
 
