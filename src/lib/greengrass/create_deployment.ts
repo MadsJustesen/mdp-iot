@@ -3,14 +3,13 @@ import {
   CreateDeploymentCommand,
 } from "@aws-sdk/client-greengrassv2";
 
-const client = new GreengrassV2Client({});
-
 export async function createDeployment(
+  client: GreengrassV2Client,
   group: string,
   component: string,
-  version: string
+  version: string,
 ) {
-  // TODO: Example command, consider rollout config and abort config etc
+  // Example command, consider rollout config and abort config etc
   const cmd = new CreateDeploymentCommand({
     targetArn: `arn:aws:iot:eu-central-1:123456789012:thinggroup/${group}`,
     components: {

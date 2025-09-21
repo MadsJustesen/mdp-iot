@@ -1,32 +1,24 @@
 import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
-import { connectionStatusSchema, getEventSchema } from "./schema.js";
+import { getEventSchema } from "./schemas.js";
+import { DeviceConnectionStatusService } from "../../services/connection/DeviceConnectionStatusService.js";
 
 const dynamodb = new DynamoDBClient();
-const TABLE_NAME = process.env.CONNECTION_STATUS_TABLE_NAME;
 
 export const handler = async (event: any) => {
   const { deviceId } = getEventSchema.parse(event);
+  
+  const connectionStatusService = new DeviceConnectionStatusService(dynamodb);
+  const deviceStatus = await connectionStatusService.getDeviceStatus(deviceId);
 
-  const result = await dynamodb.send(
-    new QueryCommand({
-      TableName: TABLE_NAME,
-      KeyConditionExpression: "#pk = :deviceId",
-      ExpressionAttributeNames: {
-        "#pk": "deviceId",
-        "#sk": "lastseen",
-      },
-      ExpressionAttributeValues: {
-        ":deviceId": { S: deviceId },
-      },
-      ScanIndexForward: false, // Descending order (newest first)
-      Limit: 1, // Only get the newest entry
-    })
-  );
-  const connectionStatus =
-    connectionStatusSchema.parse(result.Items?.[0]) || null;
+  if (!deviceStatus) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ message: "Device not found" }),
+    };
+  }
 
   return {
     statusCode: 200,
-    body: JSON.stringify(connectionStatus),
+    body: JSON.stringify(deviceStatus),
   };
 };

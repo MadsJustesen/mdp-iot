@@ -4,7 +4,8 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\""
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^24.5.2",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },
@@ -19,6 +21,7 @@
     "@aws-sdk/client-dynamodb": "^3.893.0",
     "@aws-sdk/client-greengrassv2": "^3.893.0",
     "@aws-sdk/client-iot-data-plane": "^3.893.0",
+    "@aws-sdk/util-dynamodb": "^3.893.0",
     "zod": "^4.1.11"
   }
 }

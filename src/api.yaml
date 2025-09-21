@@ -1,0 +1,68 @@
+# TODO: JUST AN EXAMPLE, REPLACE WITH ACTUAL SPEC
+openapi: 3.0.3
+info:
+  title: IoT Device Management API
+  version: 1.0.0
+servers:
+  - url: https://api.iot.example.com
+security:
+  - bearerAuth: []
+paths:
+  /deployments:
+    post:
+      summary: Create deployment (new rollout or update)
+      parameters:
+        - in: header; name: Idempotency-Key; schema: {type: string}; required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [appId, target]
+              properties:
+                appId: {type: string}
+                target:
+                  description: Selector for devices
+                  oneOf:
+                    - type: object
+                      required: [deviceIds]
+                      properties:
+                        deviceIds: {type: array, items: {type: string}}
+                    - type: object
+                      required: [query]
+                      properties:
+                        query:
+                          type: object
+                          properties:
+                            type: {type: string}     # production line type
+                            tags: {type: array, items: {type: string}}
+                rollout:
+                  type: object
+                  properties:
+                    strategy: {type: string, enum: [AllAtOnce, Canary, Wave]}
+                    batchSize: {type: integer, minimum: 1}
+                    intervalSec: {type: integer, minimum: 0}
+                restartPolicy: {type: string, enum: [Always, OnFailure, Never], default: Always}
+                timeoutSec: {type: integer, minimum: 0, default: 900}
+      responses:
+        "202": {description: Deployment scheduled}
+    get:
+      summary: List deployments
+      responses: {"200": {description: OK}}
+  /deployments/{id}:
+    get:
+      summary: Deployment status & per-device results
+      parameters: [{in: path, name: id, required: true, schema: {type: string}}]
+      responses: {"200": {description: OK}}
+  /deployments/{id}/cancel:
+    post:
+      summary: Cancel ongoing deployment
+      parameters: [{in: path, name: id, required: true, schema: {type: string}}]
+      responses: {"202": {description: Cancel requested}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
