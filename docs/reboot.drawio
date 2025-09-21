@@ -1,9 +1,85 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0" version="28.2.3">
   <diagram name="Side-1" id="uCjMy2H2XSKNpWtJCbhP">
-    <mxGraphModel>
+    <mxGraphModel dx="1463" dy="1110" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-1" target="gzH9gHAqlmaHmBG1bPR9-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-1" value="START" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="50" y="370" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-2" target="gzH9gHAqlmaHmBG1bPR9-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-2" value="&lt;div&gt;POST request to APIGateway endpoint&amp;nbsp;&lt;/div&gt;&lt;div&gt;/devices/{id}/reboot&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="190" y="380" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-4" target="gzH9gHAqlmaHmBG1bPR9-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-4" value="reboot-device Lambda function invoked" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="353.5" y="390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-10" target="gzH9gHAqlmaHmBG1bPR9-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-10" value="Checks connection-status dynamodb table" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="510" y="390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-12" target="gzH9gHAqlmaHmBG1bPR9-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-16" value="NO" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="gzH9gHAqlmaHmBG1bPR9-15">
+          <mxGeometry x="-0.2222" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-12" target="gzH9gHAqlmaHmBG1bPR9-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-19" value="YES" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="gzH9gHAqlmaHmBG1bPR9-18">
+          <mxGeometry x="-0.18" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-12" value="Device available?" style="rhombus;whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="670" y="370" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-14" value="Unable to reboot" style="ellipse;whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="690" y="230" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-17" target="gzH9gHAqlmaHmBG1bPR9-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-17" value="&lt;div&gt;Publish MQTT message to&amp;nbsp;&lt;/div&gt;&lt;div&gt;/devices/{id}/reboot topic&lt;br&gt;in IoT Core&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="530" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-20" target="gzH9gHAqlmaHmBG1bPR9-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-20" value="Device receives reboot message" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="670" y="640" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-22" target="gzH9gHAqlmaHmBG1bPR9-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-22" value="Device is rebooted" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="670" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gzH9gHAqlmaHmBG1bPR9-26" target="gzH9gHAqlmaHmBG1bPR9-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-26" value="Device will publish to&lt;br&gt;/devices/{id}/connection&lt;br&gt;topic, to confirm reboot" style="whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="490" y="740" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-28" value="END" style="ellipse;whiteSpace=wrap;html=1;rounded=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="373.5" y="730" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gzH9gHAqlmaHmBG1bPR9-30" value="&lt;div&gt;&lt;br&gt;This is a somewhat simplified happy-path.&amp;nbsp;&lt;/div&gt;&lt;div&gt;There could be cases where the device is unable to be rebooted for various reasons&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1">
+          <mxGeometry x="440" y="530" width="170" height="135" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
