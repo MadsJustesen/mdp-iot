@@ -1,4 +1,5 @@
-# example AWS SAM (Serverless Application Model) template for serverless resource provistioning
+# Example to show how lambdas are provisioned
+# NOTE: This is not a complete SAM (Serverless Application Model) file
 
 Resources:
   ApiGateway:
@@ -9,7 +10,7 @@ Resources:
   CreateDeploymentFn:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/handlers/deployments/
+      CodeUri: dist/handlers/deployments/
       Handler: index.create
       Events:
         Api:
@@ -17,4 +18,4 @@ Resources:
           Properties:
             RestApiId: !Ref ApiGateway
             Path: /deployments
-            Method: post
+            Method: POST

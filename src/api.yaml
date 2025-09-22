@@ -82,6 +82,18 @@ paths:
               schema:
                 type: string
                 example: "Reboot command sent"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid request body"
+                  error:
+                    type: object
         "500":
           description: Failed to send reboot command
           content:
