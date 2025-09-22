@@ -3,7 +3,8 @@
 ## System Components
 System components are described below:
 #### AWS API Gateway
-AWS API Gateway routes the HTTPs requests from the user to corresponding Lambda functions
+AWS API Gateway routes the HTTPs requests from the user to corresponding Lambda functions.
+For controlling access to endpoints, API Gateway can use a feature called Lambda authorizers, where a Lambda function can be used to authenticate and authorize the requester. This can be used in combination with tokens issued by **AMMA** - the internal LEGO API Platform, using users and roles defined in Entra ID to control access to endpoints.
 #### AWS Lambda
 Lambda runs the business logic. For example, when a user makes a POST request to the /deployments endpoint in the API Gateway, a Lambda function with the name **create-deployment** is invoked and handles the deployment flow.
 The Lambda functions are built on the **nodejs** runtime, using **TypeScript**
