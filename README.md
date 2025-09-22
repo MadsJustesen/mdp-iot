@@ -26,5 +26,4 @@ ECR is Amazons container registry. Used for storing container images for the app
 ![Reboot flowchart](./docs/images/reboot.drawio.svg)
 
 ## Create deployment flow
-### NOTE TO SELF: Update this flow chart, checking for device status does not make sense when deploying to a group
 ![Create deployment flowchart](./docs/images/create_deployment.drawio.svg)
