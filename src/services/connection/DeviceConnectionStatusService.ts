@@ -24,7 +24,7 @@ export class DeviceConnectionStatusService {
       this.getTableName(),
       {
         deviceId: { S: deviceId },
-      },
+      }
     );
 
     if (!deviceStatus) {
@@ -40,19 +40,23 @@ export class DeviceConnectionStatusService {
     connected,
     currentVersion,
   }: UpdateConnectionStatusParameters): Promise<void> {
-    await putItem(this.dynamoClient, this.getTableName(), {
+    const timestamp = new Date().toISOString();
+    const parsedParameters = connectionStatusSchema.parse({
       deviceId,
       connected,
-      timestamp: new Date().toISOString(),
       currentVersion,
+      timestamp,
     });
+
+    await putItem(this.dynamoClient, this.getTableName(), parsedParameters);
   }
 
   private getTableName(): string {
     const tableName = process.env.CONNECTION_STATUS_TABLE_NAME;
+
     if (!tableName) {
       throw new Error(
-        "Environment variable CONNECTION_STATUS_TABLE_NAME is not defined.",
+        "Environment variable CONNECTION_STATUS_TABLE_NAME is not defined."
       );
     }
     return tableName;

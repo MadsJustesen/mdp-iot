@@ -3,10 +3,12 @@ openapi: 3.0.3
 info:
   title: IoT Device Management API
   version: 1.0.0
+
 servers:
   - url: https://api.iot.example.com
 security:
   - bearerAuth: []
+
 paths:
   /deployments:
     post:

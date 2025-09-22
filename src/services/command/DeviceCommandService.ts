@@ -5,7 +5,7 @@ import { publishToTopic } from "../../lib/iot_core/publish_to_topic.js";
 export class DeviceCommandService {
   constructor(
     private readonly iotClient: IoTDataPlaneClient,
-    private readonly deviceConnectionStatusService: DeviceConnectionStatusService,
+    private readonly deviceConnectionStatusService: DeviceConnectionStatusService
   ) {}
 
   async rebootDevice(deviceId: string): Promise<void> {
@@ -19,7 +19,7 @@ export class DeviceCommandService {
     await publishToTopic(
       this.iotClient,
       `devices/${deviceId}/reboot`,
-      JSON.stringify({ action: "reboot" }),
+      JSON.stringify({ action: "reboot" })
     );
   }
 }

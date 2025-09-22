@@ -1,22 +1,31 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DeviceConnectionStatusService } from "../../services/connection/DeviceConnectionStatusService.js";
 import { GreengrassV2Client } from "@aws-sdk/client-greengrassv2";
 import { DeviceDeploymentService } from "../../services/deployment/DeviceDeploymentService.js";
+import { z } from "zod";
 
-const dynamodb = new DynamoDBClient();
 const greenGrassClient = new GreengrassV2Client();
 
 export const handler = async (event: any) => {
   const body = JSON.parse(event.body || "{}");
   const { group, component, version } = body;
 
-  // TODO: Validate event body with zod
+  const schema = z.object({
+    group: z.string(),
+    component: z.string(),
+    version: z.string(),
+  });
 
-  const connectionStatusService = new DeviceConnectionStatusService(dynamodb);
-  const deploymentService = new DeviceDeploymentService(
-    greenGrassClient,
-    connectionStatusService,
-  );
+  const parseResult = schema.safeParse({ group, component, version });
+  if (!parseResult.success) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Invalid request body",
+        error: parseResult.error,
+      }),
+    };
+  }
+
+  const deploymentService = new DeviceDeploymentService(greenGrassClient);
 
   await deploymentService.createDeployment({ group, component, version });
 
