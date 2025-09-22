@@ -1,70 +1,143 @@
-# TODO: JUST AN EXAMPLE, REPLACE WITH ACTUAL SPEC
 openapi: 3.0.3
 info:
   title: IoT Device Management API
+  description: API for managing IoT devices, deployments, and device commands
   version: 1.0.0
 
 servers:
   - url: https://api.iot.example.com
+    description: Production server
+
 security:
   - bearerAuth: []
 
 paths:
   /deployments:
     post:
-      summary: Create deployment (new rollout or update)
-      parameters:
-        - in: header; name: Idempotency-Key; schema: {type: string}; required: false
+      summary: Create a new deployment to device groups
+      description: Creates a Greengrass deployment to target device groups
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              required: [appId, target]
+              required: [group, component, version]
               properties:
-                appId: {type: string}
-                target:
-                  description: Selector for devices
-                  oneOf:
-                    - type: object
-                      required: [deviceIds]
-                      properties:
-                        deviceIds: {type: array, items: {type: string}}
-                    - type: object
-                      required: [query]
-                      properties:
-                        query:
-                          type: object
-                          properties:
-                            type: {type: string}     # production line type
-                            tags: {type: array, items: {type: string}}
-                rollout:
-                  type: object
-                  properties:
-                    strategy: {type: string, enum: [AllAtOnce, Canary, Wave]}
-                    batchSize: {type: integer, minimum: 1}
-                    intervalSec: {type: integer, minimum: 0}
-                restartPolicy: {type: string, enum: [Always, OnFailure, Never], default: Always}
-                timeoutSec: {type: integer, minimum: 0, default: 900}
+                group:
+                  type: string
+                  description: Target device group name
+                  example: "production-line-1"
+                component:
+                  type: string
+                  description: Greengrass component name
+                  example: "my-iot-app"
+                version:
+                  type: string
+                  description: Component version to deploy
+                  example: "1.2.0"
       responses:
-        "202": {description: Deployment scheduled}
-    get:
-      summary: List deployments
-      responses: {"200": {description: OK}}
-  /deployments/{id}:
-    get:
-      summary: Deployment status & per-device results
-      parameters: [{in: path, name: id, required: true, schema: {type: string}}]
-      responses: {"200": {description: OK}}
-  /deployments/{id}/cancel:
+        "201":
+          description: Deployment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Deployment published"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid request body"
+                  error:
+                    type: object
+        "500":
+          description: Internal server error
+
+  /devices/{deviceId}/reboot:
     post:
-      summary: Cancel ongoing deployment
-      parameters: [{in: path, name: id, required: true, schema: {type: string}}]
-      responses: {"202": {description: Cancel requested}}
+      summary: Reboot a specific device
+      description: Sends a reboot command to the device via MQTT if the device is connected
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the device
+          example: "device-001"
+      responses:
+        "200":
+          description: Reboot command sent successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Reboot command sent"
+        "500":
+          description: Failed to send reboot command
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Failed to send reboot command: Device device-001 is not connected"
+
+  /devices/{deviceId}/status:
+    get:
+      summary: Get device connection status
+      description: Retrieves the current connection status and metadata for a device
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the device
+          example: "device-001"
+      responses:
+        "200":
+          description: Device status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deviceId:
+                    type: string
+                    example: "device-001"
+                  connected:
+                    type: boolean
+                    example: true
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2024-01-01T00:00:00.000Z"
+                  currentVersion:
+                    type: string
+                    example: "v1.0.0"
+        "404":
+          description: Device not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Device not found"
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: JWT token for API authentication
